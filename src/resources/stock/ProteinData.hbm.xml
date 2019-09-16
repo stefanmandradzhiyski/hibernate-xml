@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Protein data entity hibernate mapping file -->
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- Create a filter of protein data and setting the name and condition,
+    after that create the parameter which will be used -->
+    <filter-def name="totalFilter" condition="total > :total">
+        <filter-param name="total" type="int"/>
+    </filter-def>
+
+    <!-- Set the connection of entity with the table -->
+    <class name="com.snmi.model.ProteinData" table="proteins_data">
+        <!-- Set the id(name, type, column and id generator class <foreign key to the user table>) property configuration -->
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="foreign">
+                <param name="property">user</param>
+            </generator>
+        </id>
+        <!-- Making a one to one relationship with User entity -->
+        <one-to-one name="user" class="com.snmi.model.User" constrained="true"/>
+        <!-- Set the total(name, type and column) property configuration -->
+        <property name="total" type="int">
+            <column name="total"/>
+        </property>
+        <!-- Set the goal(name, type and column) property configuration -->
+        <property name="goal" type="int">
+            <column name="goal"/>
+        </property>
+        <!-- Apply the filter -->
+        <filter name="totalFilter" />
+    </class>
+
+</hibernate-mapping>

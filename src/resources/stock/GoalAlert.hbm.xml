@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Goal alert entity hibernate mapping file -->
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- Set the connection of entity with the table -->
+    <class name="com.snmi.model.GoalAlert" table="goals_alert">
+        <!-- Set the id(name, type, column and id generator class) property configuration -->
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="increment"/>
+        </id>
+        <!-- Set the message(name, type and column) property configuration -->
+        <property name="message" type="java.lang.String">
+            <column name="message"/>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- User history entity hibernate mapping file -->
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- Set the connection of entity with the table -->
+    <class name="com.snmi.model.UserHistory" table="users_history">
+        <!-- Set the id(name, type, column and id generator class) property configuration -->
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment"/>
+        </id>
+        <!-- Making a many to one relationship + setting the not null property with User entity -->
+        <many-to-one name="user" class="com.snmi.model.User" not-null="true">
+            <column name="user_id" />
+        </many-to-one>
+        <!-- Set the entry time(name, type and column) property configuration -->
+        <property name="entryTime" type="java.util.Date">
+            <column name="entry_time"/>
+        </property>
+        <!-- Set the entry aka message(name, type and column) property configuration -->
+        <property name="entry" type="java.lang.String">
+            <column name="entry"/>
+        </property>
+    </class>
+
+</hibernate-mapping>

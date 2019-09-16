@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- User entity hibernate mapping file which combine all others entity mapping files-->
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!-- Set the connection of entity with the table -->
+    <class name="com.snmi.model.User" table="users">
+        <!-- Set the id(name, type, column and id generator class<declare it as identity and make a column for it>) property configuration -->
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <!-- Set the name(name, type and column) property configuration -->
+        <property name="name" type="java.lang.String">
+            <column name="name" />
+        </property>
+        <!-- Making an one to one relationship with protein data -->
+        <one-to-one name="proteinData" class="com.snmi.model.ProteinData" cascade="all"/>
+        <!-- Making an one to many relationship with user history
+        inversion -> this relationship is bidirectional / cascade -> save this entity when saving the user -->
+        <list name="history" table="users_history" inverse="true" cascade="all">
+            <key column="user_id" />
+            <list-index column="position" />
+            <one-to-many class="com.snmi.model.UserHistory"/>
+        </list>
+        <!-- Making a many to many with goal alerts -->
+        <set name="goalAlerts" table="users_goals_alert" cascade="all">
+            <key column="user_id" />
+            <many-to-many class="com.snmi.model.GoalAlert" column="goal_alert_id" />
+        </set>
+    </class>
+
+    <!-- Named queries which is using by hibernate query manager -->
+    <query name="readAllUsers">
+        <![CDATA[select u from User as u]]>
+    </query>
+
+    <query name="readUserByName">
+        <![CDATA[select u from User as u where u.name = :name]]>
+    </query>
+
+    <query name="readUserById">
+        <![CDATA[select u from User as u where u.id = :id]]>
+    </query>
+
+    <query name="updateNameById">
+        <![CDATA[update User u set u.name = :name where u.id = :id]]>
+    </query>
+
+    <query name="updateTotalById">
+        <![CDATA[update ProteinData pd set pd.total = :total where id = :id]]>
+    </query>
+
+    <query name="updateGoalById">
+        <![CDATA[update ProteinData pd set pd.goal = :goal where id = :id]]>
+    </query>
+
+    <query name="deleteUserById">
+        <![CDATA[delete from User as u where u.id = :id]]>
+    </query>
+
+</hibernate-mapping>
